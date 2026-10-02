@@ -177,6 +177,126 @@ def test_targeted_material_parent_redaction_and_tutor_grade_limits(learn_client)
     assert "content" not in parent_detail["submissions"][0]
 
 
+def test_tutor_submission_scope_official_visibility_and_teacher_grade_protection(learn_client):
+    c=learn_client
+    admin_csrf, ids, course, lesson, official=workspace(c)
+    other_tutor=post(c,"/learn/api/users",admin_csrf,username="other_tutor",
+                      display_name="Other Tutor",role="tutor",
+                      password="correct horse battery staple").json()
+    # Tutors can review content only for a targeted practice assignment belonging
+    # to a learner assigned to them.
+    tutor_csrf=login(c,"tutor")
+    targeted=post(c,f"/learn/api/courses/{course['id']}/assignments",tutor_csrf,
+                  title="Tutor practice",instructions="Work these steps",max_points=5,
+                  kind="practice",target_student_id=ids["student"]).json()
+    student_csrf=login(c,"student")
+    targeted_sub=post(c,f"/learn/api/assignments/{targeted['id']}/submissions",student_csrf,
+                      content="My worked answer").json()
+    login(c,"other_tutor")
+    assert c.get(f"/learn/api/assignments/{targeted['id']}").status_code==403
+    assert post(c,f"/learn/api/submissions/{targeted_sub['id']}/grade",
+                c.get("/learn/api/auth/me").json()["csrf_token"],points=4,
+                feedback="No access",published=True).status_code==403
+    tutor_csrf=login(c,"tutor")
+    detail=c.get(f"/learn/api/assignments/{targeted['id']}").json()
+    assert detail["submissions"][0]["content"]=="My worked answer"
+    assert post(c,f"/learn/api/submissions/{targeted_sub['id']}/grade",tutor_csrf,
+                points=4,feedback="Good reasoning",published=True).status_code==200
+
+    # A tutor cannot read official work or even its submission metadata before a
+    # published grade; once published, the result is visible without content.
+    student_csrf=login(c,"student")
+    official_sub=post(c,f"/learn/api/assignments/{official['id']}/submissions",student_csrf,
+                      content="Official response secret").json()
+    login(c,"tutor")
+    assert c.get(f"/learn/api/assignments/{official['id']}").status_code==404
+    teacher_csrf=login(c,"admin")
+    assert post(c,f"/learn/api/submissions/{official_sub['id']}/grade",teacher_csrf,
+                points=8,feedback="Official feedback",published=True).status_code==200
+    tutor_csrf=login(c,"tutor")
+    official_detail=c.get(f"/learn/api/assignments/{official['id']}")
+    assert official_detail.status_code==200
+    official_result=official_detail.json()["submissions"][0]
+    assert "content" not in official_result
+    assert official_result["points"]==8
+
+    # Untargeted practice can appear in records, but tutors cannot read its
+    # response or grade it. A course teacher's existing grade is protected.
+    teacher_csrf=login(c,"admin")
+    untargeted=post(c,f"/learn/api/courses/{course['id']}/assignments",teacher_csrf,
+                    title="Class practice",instructions="Practice",max_points=5,
+                    kind="practice").json()
+    student_csrf=login(c,"student")
+    untargeted_sub=post(c,f"/learn/api/assignments/{untargeted['id']}/submissions",student_csrf,
+                        content="Untargeted response").json()
+    tutor_csrf=login(c,"tutor")
+    tutor_detail=c.get(f"/learn/api/assignments/{untargeted['id']}").json()
+    assert "content" not in tutor_detail["submissions"][0]
+    assert post(c,f"/learn/api/submissions/{untargeted_sub['id']}/grade",tutor_csrf,
+                points=1,feedback="No",published=False).status_code==403
+
+    teacher_csrf=login(c,"admin")
+    teacher_targeted=post(c,f"/learn/api/courses/{course['id']}/assignments",teacher_csrf,
+                          title="Teacher targeted practice",instructions="Practice",
+                          max_points=5,kind="practice",target_student_id=ids["student"]).json()
+    student_csrf=login(c,"student")
+    teacher_targeted_sub=post(c,f"/learn/api/assignments/{teacher_targeted['id']}/submissions",student_csrf,
+                              content="Teacher targeted response").json()
+    teacher_csrf=login(c,"admin")
+    assert post(c,f"/learn/api/submissions/{teacher_targeted_sub['id']}/grade",teacher_csrf,
+                points=5,feedback="Teacher's grade",published=True).status_code==200
+    tutor_csrf=login(c,"tutor")
+    assert post(c,f"/learn/api/submissions/{teacher_targeted_sub['id']}/grade",tutor_csrf,
+                points=0,feedback="Overwrite",published=False).status_code==409
+    with store.db() as conn:
+        grade=conn.execute("SELECT grader_id,points,feedback,published FROM learn_grades WHERE submission_id=?",
+                           (teacher_targeted_sub["id"],)).fetchone()
+    assert tuple(grade)==(ids["admin"],5.0,"Teacher's grade",1)
+
+
+def test_parent_progress_redacts_practice_feedback_but_keeps_summaries(learn_client):
+    c=learn_client
+    admin_csrf, ids, course, lesson, official=workspace(c)
+    assert post(c,"/learn/api/parent-links",admin_csrf,parent_id=ids["parent"],
+                student_id=ids["student"]).status_code==200
+    tutor_csrf=login(c,"tutor")
+    practice=post(c,f"/learn/api/courses/{course['id']}/assignments",tutor_csrf,
+                  title="Practice",instructions="Practice",max_points=5,
+                  kind="practice",target_student_id=ids["student"]).json()
+    student_csrf=login(c,"student")
+    sub=post(c,f"/learn/api/assignments/{practice['id']}/submissions",student_csrf,
+             content="Answer").json()
+    tutor_csrf=login(c,"tutor")
+    assert post(c,f"/learn/api/submissions/{sub['id']}/grade",tutor_csrf,points=4,
+                feedback="Private tutor feedback",published=True).status_code==200
+
+    login(c,"parent")
+    report=c.get(f"/learn/api/students/{ids['student']}/progress").json()
+    record=next(r for r in report["records"] if r["assignment_id"]==practice["id"])
+    assert record["feedback"]==""
+    assert report["practice"]["graded_count"]==1
+    dashboard=c.get("/learn/api/dashboard").json()
+    dashboard_record=next(r for r in dashboard["progress"][0]["records"]
+                          if r["assignment_id"]==practice["id"])
+    assert dashboard_record["feedback"]==""
+    assert dashboard["progress"][0]["practice"]["graded_count"]==1
+
+
+def test_enum_types_and_sqlite_integer_range_are_validated(learn_client):
+    c=learn_client
+    admin_csrf, ids, course, lesson, assignment=workspace(c)
+    assert post(c,"/learn/api/users",admin_csrf,username="badrole",display_name="Bad",
+                role=[],password="correct horse battery staple").status_code==422
+    assert post(c,f"/learn/api/courses/{course['id']}/assignments",admin_csrf,
+                title="Bad enum",instructions="",max_points=1,kind=[]).status_code==422
+    assert post(c,f"/learn/api/courses/{course['id']}/enrollments",admin_csrf,
+                student_id=2**100).status_code==422
+    login(c,"student")
+    response=post(c,"/learn/api/profile",c.get("/learn/api/auth/me").json()["csrf_token"],
+                  learning_preference=[])
+    assert response.status_code==422
+
+
 def test_progress_and_assignment_exclude_unenrolled_course(learn_client):
     c=learn_client
     admin_csrf, ids, course, lesson, assignment=workspace(c)

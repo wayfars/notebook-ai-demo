@@ -71,8 +71,10 @@
     let data = {};
     try { data = await response.json(); } catch { /* An empty response has no details to show. */ }
     if (!response.ok) {
-      if (response.status === 401 && options.auth !== false) showLogin();
-      throw new Error(typeof data.detail === 'string' ? data.detail : `Request failed (${response.status}).`);
+      if (response.status === 401 && options.auth !== false && options.redirectOnUnauthorized !== false) showLogin();
+      const error = new Error(typeof data.detail === 'string' ? data.detail : `Request failed (${response.status}).`);
+      error.status = response.status;
+      throw error;
     }
     return data;
   }
@@ -677,7 +679,24 @@
     }
     grid.append(draftCard);
     const work = card('Practice in this course', 'Practice grades support learning and do not change official course averages.');
-    appendItems(work, assignments().filter(item => item.kind === 'practice'), 'No practice tasks yet', 'Create targeted practice when a learner is ready for more work.', item => assignmentRow(item, 'tutor'));
+    appendItems(work, assignments().filter(item => item.kind === 'practice'), 'No practice tasks yet', 'Create targeted practice when a learner is ready for more work.', item => {
+      const li = assignmentRow(item, 'tutor');
+      if (!item.target_student_id) return li;
+      const inspect = make('button', { className: 'button button-quiet button-small', text: 'Review submissions', attrs: { type: 'button' } });
+      const details = make('div', { attrs: { hidden: '' } });
+      inspect.addEventListener('click', async () => {
+        if (!details.hidden) { details.hidden = true; inspect.textContent = 'Review submissions'; return; }
+        inspect.disabled = true; inspect.textContent = 'Loading…';
+        try {
+          const result = await api(`/assignments/${encodeURIComponent(item.id)}`);
+          renderSubmissions(details, result, item, true);
+          details.hidden = false; inspect.textContent = 'Hide submissions';
+        } catch (error) { setNotice(error.message, true); inspect.textContent = 'Review submissions'; }
+        finally { inspect.disabled = false; }
+      });
+      li.append(inspect, details);
+      return li;
+    });
     grid.append(work); content.append(grid);
   }
 
@@ -695,8 +714,23 @@
       finally { button.disabled = false; }
     });
     $('#logout-button').addEventListener('click', async () => {
-      try { await api('/auth/logout', { method: 'POST', body: {} }); } catch { /* A timed-out session is already signed out. */ }
-      showLogin('You have signed out.');
+      const button = $('#logout-button'); button.disabled = true;
+      try {
+        try {
+          await api('/auth/logout', { method: 'POST', body: {}, redirectOnUnauthorized: false });
+        } catch (logoutError) {
+          try {
+            const session = await api('/auth/me', { auth: false });
+            state.csrf = session.csrf_token || '';
+            await api('/auth/logout', { method: 'POST', body: {}, redirectOnUnauthorized: false });
+          } catch (retryError) {
+            if (retryError.status === 401) { showLogin('Your session has expired.'); return; }
+            setNotice(`Could not sign out. ${retryError.message || logoutError.message}`, true);
+            return;
+          }
+        }
+        showLogin('You have signed out.');
+      } finally { button.disabled = false; }
     });
     try {
       const data = await api('/auth/me', { auth: false });

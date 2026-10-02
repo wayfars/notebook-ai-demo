@@ -13,17 +13,21 @@ throwaway database and point the learning module at that same file:
 uv sync --extra dev
 uv run python -m app.learning.seed demo --db-path /tmp/notebook-learning-demo.sqlite3
 export NOTEBOOK_LEARNING_DB_PATH=/tmp/notebook-learning-demo.sqlite3
-uv run uvicorn app.main:app --host 127.0.0.1 --port 8000
+uv run uvicorn app.main:app --host 127.0.0.1 --port 5100
 ```
 
-Open `http://127.0.0.1:8000/learn/`. The fictional accounts are
+Open `http://127.0.0.1:5100/learn/`. Port 8000 is commonly used by the
+model endpoint configured through `OPENAI_BASE_URL`; keeping the app preview
+on 5100 avoids sending tutor requests back to the app itself. The fictional accounts are
 `demo-teacher`, `demo-student`, `demo-parent`, and `demo-tutor`; each uses the
 password `Fictional-Demo-2026!`. These credentials are only for the invented
 demo records. The demo command requires an explicit path, refuses a database
 that already contains tables, and refuses the configured learning database.
 Do not use these credentials with real information.
 
-The parent view below is a capture of the same fictional demo data:
+The parent view below is a capture of fictional demo data, including records
+added during browser QA; it is not an exact rendering of the `seed demo`
+database:
 
 ![Fictional parent progress view](learning-parent.png)
 
@@ -48,7 +52,9 @@ The administrator creates other accounts and explicitly links parents to
 students. Teachers own courses and official grading; tutors can create
 targeted practice for assigned learners; students submit their work. Official
 grades become visible to students, parents, and tutors only after a teacher
-publishes them. Practice is tracked separately from official grades.
+publishes them. Practice is tracked separately from official grades. Parents
+may see aggregate practice progress, but practice feedback and submission text
+are withheld.
 
 ## Model setup and limits
 
@@ -58,8 +64,9 @@ AI help uses the public app settings `OPENAI_BASE_URL`, `OPENAI_API_KEY`, and
 `NOTEBOOK_LEARNING_MODEL`. Configure a compatible local or private endpoint
 before asking for a tutor response. The application makes bounded requests;
 errors and incomplete completions are reported without returning endpoint
-details. Automated learning-AI tests use mocked completions; no live learning
-model connection result is claimed in this release. Tutoring receives only the
+details. Automated learning-AI tests use mocked completions. One bounded live
+client smoke check is recorded in [LEARNING-SMOKE.md](LEARNING-SMOKE.md); it is
+not a quality or performance evaluation. Tutoring receives only the
 authorized lesson or assignment and that student's recent contextual chat. It
 does not search the grounded-chat source library. Practice drafts are returned
 for editing and are never published or graded automatically. Tutors can also
@@ -76,7 +83,10 @@ responsible for reviewing explanations, drafts, submissions, and grades.
 
 ## Scope
 
-This release is a local demonstration, not a production school service. Keep
+This release is a local demonstration, not a production school service. There
+is no interface or API for editing or revoking parent links, enrollments, tutor
+assignments, courses, lessons, or assignments; correcting those records
+currently requires direct database administration. Keep
 the server bound to localhost for a preview. Do not expose the complete demo
 application as a public service: the separate learning login does not turn the
 grounded-chat endpoints into an authenticated product. A real deployment needs
@@ -94,5 +104,4 @@ published a reviewed lesson and practice assignment without making an AI
 request. Missing tutor context returned a safe validation error. At desktop
 1440px and mobile 390px viewport widths, the check found no horizontal
 overflow or browser JavaScript errors. This workflow check does not establish
-live-model behavior or a production deployment; the automated AI tests likewise
-use mocked completions.
+live-model behavior or a production deployment.

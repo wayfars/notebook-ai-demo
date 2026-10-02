@@ -60,6 +60,11 @@ def test_learning_ui_covers_role_workflows_and_uses_text_only_dynamic_rendering(
     assert "lesson_content: '', learning_objectives: ''" in script
     assert "const editorCourseId = String(state.courseId);" in script
     assert "let practiceLessonId = null;" in script
+    assert "if (!item.target_student_id) return li;" in script
+    assert "renderSubmissions(details, result, item, true);" in script
+    assert "const session = await api('/auth/me', { auth: false });" in script
+    assert "redirectOnUnauthorized: false" in script
+    assert "Could not sign out." in script
     assert ".grid > .card:not([class*=\"span-\"]) { grid-column: span 12; }" in styles
     assert "maxlength" in template.lower()
     assert "aria-live" in template.lower()

@@ -63,7 +63,7 @@ def _id(value, key):
         raise HTTPException(422, f"invalid {key}")
     try:
         v = int(value)
-        if v <= 0: raise ValueError()
+        if v <= 0 or v > 2**63 - 1: raise ValueError()
         return v
     except (ValueError, TypeError):
         raise HTTPException(422, f"invalid {key}")
@@ -115,6 +115,14 @@ def _records(conn, student_id, course_id=None):
     return [dict(r) for r in conn.execute(sql, params)]
 
 
+def _redact_parent_practice_feedback(records):
+    """Parents retain aggregate practice progress, but not practice feedback."""
+    for record in records:
+        if record.get("kind") == "practice":
+            record["feedback"] = ""
+    return records
+
+
 @router.post("/auth/login")
 def login(request: Request, response: Response, data: dict):
     _body(request, data); _only(data,{"username","password"}); _check_origin(request)
@@ -164,7 +172,7 @@ def create_user(request: Request, data: dict, user=Depends(_user)):
     if not re.fullmatch(r"[A-Za-z0-9_.@+-]+", username): raise HTTPException(422, "invalid username")
     display = _text(data, "display_name", 120)
     role = data.get("role")
-    if role not in {"teacher", "student", "tutor", "parent"}: raise HTTPException(422, "invalid role")
+    if not isinstance(role, str) or role not in {"teacher", "student", "tutor", "parent"}: raise HTTPException(422, "invalid role")
     try: pw = auth.hash_password(data.get("password"))
     except ValueError as e: raise HTTPException(422, str(e))
     with store.db() as conn:
@@ -284,7 +292,7 @@ def create_lesson(course_id:int,request:Request,data:dict,user=Depends(_user)):
 def create_assignment(course_id:int,request:Request,data:dict,user=Depends(_user)):
     _mut(request,user); _body(request,data); target=data.get("target_student_id"); target=_id(target,"target_student_id") if target is not None else None
     kind=data.get("kind","official"); points=data.get("max_points")
-    if kind not in {"official","practice"}: raise HTTPException(422,"invalid kind")
+    if not isinstance(kind,str) or kind not in {"official","practice"}: raise HTTPException(422,"invalid kind")
     if isinstance(points,bool) or not isinstance(points,(float,int)) or not math.isfinite(points) or points<=0 or points>1_000_000: raise HTTPException(422,"max_points must be finite and positive")
     if user["role"]=="tutor" and (kind!="practice" or target is None): raise HTTPException(403,"tutors may create only targeted practice")
     with store.db() as conn:
@@ -317,6 +325,19 @@ def assignment_detail(assignment_id:int,user=Depends(_user)):
         elif user["role"]=="tutor":
             sids=[r[0] for r in conn.execute("SELECT student_id FROM learn_tutor_assignments WHERE course_id=? AND tutor_id=?",(a["course_id"],user["id"]))]
             if not sids: raise HTTPException(403,"assignment access denied")
+            if a["kind"]=="official":
+                if a["target_student_id"] is not None:
+                    relevant_sids=[sid for sid in sids if sid==a["target_student_id"]]
+                else:
+                    relevant_sids=sids
+                if not relevant_sids:
+                    raise HTTPException(404,"assignment not found")
+                relevant_clause=','.join('?' for _ in relevant_sids)
+                visible=conn.execute(f"SELECT 1 FROM learn_submissions s JOIN learn_grades g ON g.submission_id=s.id WHERE s.assignment_id=? AND s.student_id IN ({relevant_clause}) AND g.published=1 LIMIT 1",[assignment_id,*relevant_sids]).fetchone()
+                if not visible:
+                    raise HTTPException(404,"assignment not found")
+                # Official submission timestamps are hidden until that learner's grade is published.
+                sids=relevant_sids
         else:
             sids=[r[0] for r in conn.execute("SELECT p.student_id FROM learn_parent_links p JOIN learn_enrollments e ON e.student_id=p.student_id WHERE p.parent_id=? AND e.course_id=?",(user["id"],a["course_id"]))]
             if not sids: raise HTTPException(403,"assignment access denied")
@@ -324,9 +345,12 @@ def assignment_detail(assignment_id:int,user=Depends(_user)):
         sid_clause=','.join('?' for _ in sids) or 'NULL'
         subs=[]
         for s in conn.execute(f"SELECT s.*,u.display_name,u.username,g.points,g.feedback,g.published FROM learn_submissions s JOIN learn_users u ON u.id=s.student_id LEFT JOIN learn_grades g ON g.submission_id=s.id WHERE s.assignment_id=? AND s.student_id IN ({sid_clause})",[assignment_id,*sids]):
+            if user["role"]=="tutor" and a["kind"]=="official" and not s["published"]:
+                continue
             d=dict(s); visible=user["role"]=="teacher" or bool(d["published"]) or (user["role"]=="tutor" and a["kind"]=="practice")
             if not visible: d["points"]=None; d["feedback"]=""; d["published"]=False
-            if user["role"] in {"student","parent","tutor"} and not (user["role"]=="student" and d["student_id"]==user["id"]): d.pop("content",None)
+            tutor_targeted_practice=(user["role"]=="tutor" and a["kind"]=="practice" and a["target_student_id"]==d["student_id"])
+            if user["role"] in {"student","parent","tutor"} and not (user["role"]=="student" and d["student_id"]==user["id"]) and not tutor_targeted_practice: d.pop("content",None)
             subs.append(d)
         lesson=conn.execute("SELECT * FROM learn_lessons WHERE id=?",(a["lesson_id"],)).fetchone() if a["lesson_id"] else None
         return {"assignment":dict(a),"lesson":dict(lesson) if lesson else None,"submissions":subs}
@@ -361,7 +385,11 @@ def grade(submission_id:int,request:Request,data:dict,user=Depends(_user)):
         if points<0 or points>row["max_points"]: raise HTTPException(422,"points outside assignment range")
         if user["role"]=="teacher":
             if row["teacher_id"]!=user["id"]: raise HTTPException(403,"course owner required")
-        elif row["kind"]!="practice" or not _is_tutor(conn,row["course_id"],row["student_id"],user["id"]): raise HTTPException(403,"assigned tutor may grade only targeted practice")
+        elif row["kind"]!="practice" or row["target_student_id"]!=row["student_id"] or not _is_tutor(conn,row["course_id"],row["student_id"],user["id"]): raise HTTPException(403,"assigned tutor may grade only targeted practice")
+        if user["role"]=="tutor":
+            existing=conn.execute("SELECT grader_id FROM learn_grades WHERE submission_id=?",(submission_id,)).fetchone()
+            if existing and existing["grader_id"]==row["teacher_id"]:
+                raise HTTPException(409,"course teacher grade cannot be overwritten by a tutor")
         conn.execute("INSERT INTO learn_grades(submission_id,grader_id,points,feedback,published) VALUES(?,?,?,?,?) ON CONFLICT(submission_id) DO UPDATE SET grader_id=excluded.grader_id,points=excluded.points,feedback=excluded.feedback,published=excluded.published,graded_at=datetime('now')",(submission_id,user["id"],float(points),feedback,int(published)))
         return dict(conn.execute("SELECT * FROM learn_grades WHERE submission_id=?",(submission_id,)).fetchone())
 
@@ -385,6 +413,8 @@ def student_progress(student_id:int,user=Depends(_user)):
         elif user["role"]=="tutor":
             visible={r[0] for r in conn.execute("SELECT course_id FROM learn_tutor_assignments WHERE tutor_id=? AND student_id=?",(user["id"],student_id))}
             records=[r for r in records if r["course_id"] in visible]
+        elif user["role"]=="parent":
+            _redact_parent_practice_feedback(records)
         return _progress(dict(student),records)
 
 
@@ -392,7 +422,7 @@ def student_progress(student_id:int,user=Depends(_user)):
 def profile(request:Request,data:dict,user=Depends(_user)):
     _mut(request,user); _need(user,{"student"}); _body(request,data)
     pref=data.get("learning_preference")
-    if pref not in PREFERENCES: raise HTTPException(422,"invalid learning_preference")
+    if not isinstance(pref,str) or pref not in PREFERENCES: raise HTTPException(422,"invalid learning_preference")
     with store.db() as conn: conn.execute("UPDATE learn_users SET learning_preference=? WHERE id=?",(pref,user["id"]))
     user["learning_preference"]=pref
     return store.user_public(user)
@@ -488,5 +518,7 @@ def dashboard(user=Depends(_user)):
             elif user["role"]=="tutor":
                 visible={r[0] for r in conn.execute("SELECT course_id FROM learn_tutor_assignments WHERE tutor_id=? AND student_id=?",(user["id"],st["id"]))}
                 rec=[r for r in rec if r["course_id"] in visible]
+            elif user["role"]=="parent":
+                _redact_parent_practice_feedback(rec)
             progress.append(_progress(st,rec))
         return {"user":store.user_public(user),"courses":crs,"students":students,"assignments":assignments,"progress":progress}
