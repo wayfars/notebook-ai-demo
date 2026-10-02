@@ -1,0 +1,529 @@
+[
+  {
+    "id": "ops-01",
+    "question": "How often should each HelioDock battery enclosure be inspected?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "30 days",
+      "every 30 days"
+    ]
+  },
+  {
+    "id": "ops-02",
+    "question": "What is the HelioDock battery bus voltage?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "48 volt",
+      "48 volts"
+    ]
+  },
+  {
+    "id": "ops-03",
+    "question": "When should the HelioDock intake filter be replaced?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "90 days",
+      "every 90 days"
+    ]
+  },
+  {
+    "id": "ops-04",
+    "question": "What does a blue HelioDock status lamp indicate?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "charging"
+    ]
+  },
+  {
+    "id": "ops-05",
+    "question": "Where is the emergency disconnect mounted?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "left service rail"
+    ]
+  },
+  {
+    "id": "ops-06",
+    "question": "What is the nominal battery capacity?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "12 kilowatt-hours",
+      "12 kwh"
+    ]
+  },
+  {
+    "id": "ops-07",
+    "question": "What temperature range should the enclosure stay within?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "5 and 35 degrees",
+      "5 to 35"
+    ]
+  },
+  {
+    "id": "ops-08",
+    "question": "Where are inspection results recorded?",
+    "answerable": true,
+    "expected_source_ids": [
+      "ops"
+    ],
+    "required_answer_terms": [
+      "fieldledger"
+    ]
+  },
+  {
+    "id": "safety-01",
+    "question": "What protection is required when operating the laser cutter?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "eye protection"
+    ]
+  },
+  {
+    "id": "safety-02",
+    "question": "How should the laser cutter be supervised while enabled?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "continuously"
+    ]
+  },
+  {
+    "id": "safety-03",
+    "question": "Where should lithium batteries be stored?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "fire-rated cabinet",
+      "room 204"
+    ]
+  },
+  {
+    "id": "safety-04",
+    "question": "Where is the eyewash station?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "north entrance"
+    ]
+  },
+  {
+    "id": "safety-05",
+    "question": "Who should be contacted about a chemical spill before cleanup?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "site safety lead"
+    ]
+  },
+  {
+    "id": "safety-06",
+    "question": "Can damaged battery packs be charged?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "do not charge",
+      "not charge"
+    ]
+  },
+  {
+    "id": "safety-07",
+    "question": "Where is the first-aid kit?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "break room door"
+    ]
+  },
+  {
+    "id": "safety-08",
+    "question": "What is the evacuation assembly point?",
+    "answerable": true,
+    "expected_source_ids": [
+      "safety"
+    ],
+    "required_answer_terms": [
+      "east parking sign"
+    ]
+  },
+  {
+    "id": "network-01",
+    "question": "Which network segment does the Cedar Lab gateway use?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "segment 42"
+    ]
+  },
+  {
+    "id": "network-02",
+    "question": "What reserved host name is assigned to the gateway?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "cedar-gateway.local"
+    ]
+  },
+  {
+    "id": "network-03",
+    "question": "How frequently does the gateway send telemetry?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "15 minutes",
+      "every 15 minutes"
+    ]
+  },
+  {
+    "id": "network-04",
+    "question": "Which channel does the backup radio use?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "channel 7"
+    ]
+  },
+  {
+    "id": "network-05",
+    "question": "How often should gateway credentials be rotated?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "180 days",
+      "every 180 days"
+    ]
+  },
+  {
+    "id": "network-06",
+    "question": "What does a steady amber network light mean?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "queued upload"
+    ]
+  },
+  {
+    "id": "network-07",
+    "question": "How long are diagnostic bundles stored?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "14 days"
+    ]
+  },
+  {
+    "id": "network-08",
+    "question": "Which team owns the network service?",
+    "answerable": true,
+    "expected_source_ids": [
+      "network"
+    ],
+    "required_answer_terms": [
+      "platform operations"
+    ]
+  },
+  {
+    "id": "quality-01",
+    "question": "How frequently is the Juniper pressure gauge calibrated?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "180 days",
+      "every 180 days"
+    ]
+  },
+  {
+    "id": "quality-02",
+    "question": "What reference pressure is used for the zero-offset check?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "100 kilopascals",
+      "100 kpa"
+    ]
+  },
+  {
+    "id": "quality-03",
+    "question": "What zero-offset range is acceptable?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "0.5 kilopascals",
+      "plus or minus 0.5"
+    ]
+  },
+  {
+    "id": "quality-04",
+    "question": "Where are calibration certificates recorded?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "quality register"
+    ]
+  },
+  {
+    "id": "quality-05",
+    "question": "What happens after a gauge fails a check?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "quarantine"
+    ]
+  },
+  {
+    "id": "quality-06",
+    "question": "What is the certified temperature range?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "10 and 30 degrees",
+      "10 to 30"
+    ]
+  },
+  {
+    "id": "quality-07",
+    "question": "What is the calibration bench asset code?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "cal-17"
+    ]
+  },
+  {
+    "id": "quality-08",
+    "question": "Who completes the quality review?",
+    "answerable": true,
+    "expected_source_ids": [
+      "quality"
+    ],
+    "required_answer_terms": [
+      "second technician"
+    ]
+  },
+  {
+    "id": "continuity-01",
+    "question": "Where is the Riverstone recovery kit stored?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "cabinet b-12"
+    ]
+  },
+  {
+    "id": "continuity-02",
+    "question": "What is the sensor archive target recovery time?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "four hours",
+      "4 hours"
+    ]
+  },
+  {
+    "id": "continuity-03",
+    "question": "What is the archive target recovery point?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "30 minutes"
+    ]
+  },
+  {
+    "id": "continuity-04",
+    "question": "How frequently is the restore procedure tested?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "90 days",
+      "every 90 days"
+    ]
+  },
+  {
+    "id": "continuity-05",
+    "question": "Who starts the incident bridge?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "on-call coordinator"
+    ]
+  },
+  {
+    "id": "continuity-06",
+    "question": "How is the local offline copy protected?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "encrypted",
+      "site recovery key"
+    ]
+  },
+  {
+    "id": "continuity-07",
+    "question": "Who is notified after archive restoration?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "data steward"
+    ]
+  },
+  {
+    "id": "continuity-08",
+    "question": "When does the plan owner review the procedure?",
+    "answerable": true,
+    "expected_source_ids": [
+      "continuity"
+    ],
+    "required_answer_terms": [
+      "each january",
+      "january"
+    ]
+  },
+  {
+    "id": "unanswerable-01",
+    "question": "Which constellation contains the star Denebola?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-02",
+    "question": "What is the viscosity of liquid xenon at 20 degrees Celsius?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-03",
+    "question": "Where does the Arctic tern nest?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-04",
+    "question": "Name the capital city of Bhutan.",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-05",
+    "question": "What year was the bicycle chain invented?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-06",
+    "question": "How many grams of protein are in a cacao pod?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-07",
+    "question": "Which mineral is used in a garnet bracelet?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-08",
+    "question": "Where is the nearest observatory located?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-09",
+    "question": "What is the boiling point of liquid argon?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  },
+  {
+    "id": "unanswerable-10",
+    "question": "Who composed the opera The Magic Flute?",
+    "answerable": false,
+    "expected_source_ids": [],
+    "required_answer_terms": []
+  }
+]

@@ -1,0 +1,13 @@
+.venv/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+data/*.sqlite3
+reports/*
+!reports/.gitkeep
+!reports/offline-baseline.json
+!reports/__init__.py

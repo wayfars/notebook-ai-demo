@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ops",
+    "title": "HelioDock Field Operations Guide",
+    "body": "HelioDock battery modules use a 48 volt direct-current bus. Inspect each battery enclosure every 30 days. Replace the intake filter every 90 days. A blue status lamp means the unit is charging. The emergency disconnect is mounted on the left service rail. The nominal battery capacity is 12 kilowatt-hours. Keep the enclosure between 5 and 35 degrees Celsius. Record inspection results in the FieldLedger maintenance log."
+  },
+  {
+    "id": "safety",
+    "title": "Northstar Workshop Safety Standard",
+    "body": "Wear eye protection whenever operating the laser cutter. The laser cutter must be supervised continuously while its beam is enabled. Store lithium batteries in the fire-rated cabinet in room 204. The eyewash station is beside the north entrance. Report a chemical spill to the site safety lead before cleanup. Do not charge damaged battery packs. The first-aid kit is mounted beside the break room door. Evacuation assembly point is the east parking sign."
+  },
+  {
+    "id": "network",
+    "title": "Cedar Lab Network Runbook",
+    "body": "The Cedar Lab sensor gateway uses network segment 42. Its reserved host name is cedar-gateway.local. The gateway sends telemetry every 15 minutes. The backup radio operates on channel 7. Rotate gateway credentials every 180 days. A steady amber network light indicates a queued upload. Store diagnostic bundles for 14 days. The network service owner is the Platform Operations team."
+  },
+  {
+    "id": "quality",
+    "title": "Juniper Calibration and Quality Manual",
+    "body": "Calibrate the Juniper pressure gauge every 180 days. Use a reference pressure of 100 kilopascals for the zero-offset check. Acceptable zero offset is within plus or minus 0.5 kilopascals. Record calibration certificates in the Quality Register. Quarantine a gauge after any failed check. The certified temperature range is 10 to 30 degrees Celsius. The calibration bench asset code is CAL-17. The quality review is completed by a second technician."
+  },
+  {
+    "id": "continuity",
+    "title": "Riverstone Continuity Plan",
+    "body": "The Riverstone lab stores its recovery kit in cabinet B-12. The target recovery time for the sensor archive is four hours. The target recovery point is 30 minutes of data. Test the restore procedure every 90 days. The on-call coordinator starts the incident bridge. The local offline copy is encrypted with the site recovery key. Notify the data steward after archive restoration. The plan owner reviews this procedure each January."
+  }
+]

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notebook-grounded-chat-demo"
+version = "0.1.0"
+description = "A compact document-grounded AI chat application with a reproducible retrieval evaluation."
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "openai>=1.40,<3",
+  "pydantic>=2.8,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "httpx>=0.27,<1"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app", "data", "evaluation", "reports", "static", "templates"]
+exclude = ["tests", "tests.*"]
+
+[tool.setuptools.package-data]
+data = ["sample_sources.json"]
+evaluation = ["cases.json"]
+reports = ["offline-baseline.json"]
+static = ["app.js", "style.css"]
+templates = ["index.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

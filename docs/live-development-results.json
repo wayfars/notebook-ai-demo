@@ -1,0 +1,1289 @@
+{
+  "mode": "live_model_opt_in",
+  "started_at": "2026-10-02T16:36:29.929753+00:00",
+  "model": "halogen-qwen3.8-flash-next",
+  "configuration": {
+    "temperature": 0.1,
+    "max_tokens": 512,
+    "timeout_seconds": 30.0,
+    "source_sha256": "c7c77a45fb00a5cda9ef689ae561fec6f2e09594a7046d50841c8f734b4e0fe0",
+    "cases_sha256": "04520d8a811f5596692db6d686e67b9b80e0c30e2ef9e4bd24d7c70a2aeb610c",
+    "system_prompt_sha256": "369fab8294df8b0f88b4d134b0650eb055d3b23c077ce791a25569a8152b7afb",
+    "implementation_sha256": {
+      "app/generation.py": "72d18b734e37b63df5d847003d723862cc0eeb5a54aae803e0405c27ada94838",
+      "evaluation/run_live.py": "0f7245dbfa4d136070ffceb34370791ae7d5e9b467d4308c78cbcda4647d216c"
+    },
+    "environment_versions": {
+      "python": "3.11.15",
+      "sqlite": "3.50.4",
+      "openai": "2.54.0",
+      "fastapi": "0.142.2"
+    }
+  },
+  "case_count": 50,
+  "limited_run": false,
+  "metrics": {
+    "answer_phrase_check_rate_answerable": 0.975,
+    "expected_source_citation_rate_answerable": 1.0,
+    "citation_marker_integrity_rate_answerable": 1.0,
+    "abstention_rate_unanswerable": 1.0,
+    "accepted_answer_rate": 0.98,
+    "endpoint_errors": 0,
+    "non_completed_model_answers": 0
+  },
+  "limitations": "Phrase checks are brittle proxies for answer correctness; citation checks validate marker mapping, not whether cited text entails each claim. Incomplete, filtered, unsupported, and failed requests remain in the metric denominators and cannot be accepted. Abstention is detected by a small phrase list. Review answers and excerpts manually before making quality claims.",
+  "cases": [
+    {
+      "case_id": "ops-01",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 3141.26,
+      "usage": {
+        "prompt_tokens": 371,
+        "completion_tokens": 46,
+        "total_tokens": 417
+      },
+      "answer": "Each HelioDock battery enclosure should be inspected every 30 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1701.45,
+      "usage": {
+        "prompt_tokens": 369,
+        "completion_tokens": 46,
+        "total_tokens": 415
+      },
+      "answer": "The HelioDock battery bus voltage is 48 volts direct-current [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-03",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2486.54,
+      "usage": {
+        "prompt_tokens": 258,
+        "completion_tokens": 52,
+        "total_tokens": 310
+      },
+      "answer": "Based on the provided source, the HelioDock intake filter should be replaced every 90 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-04",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1998.6,
+      "usage": {
+        "prompt_tokens": 258,
+        "completion_tokens": 54,
+        "total_tokens": 312
+      },
+      "answer": "Based on the provided source, a blue status lamp on a HelioDock unit indicates that the unit is charging [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-05",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1541.63,
+      "usage": {
+        "prompt_tokens": 366,
+        "completion_tokens": 42,
+        "total_tokens": 408
+      },
+      "answer": "The emergency disconnect is mounted on the left service rail [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-06",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1558.99,
+      "usage": {
+        "prompt_tokens": 366,
+        "completion_tokens": 44,
+        "total_tokens": 410
+      },
+      "answer": "The nominal battery capacity is 12 kilowatt-hours [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-07",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality",
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2428.24,
+      "usage": {
+        "prompt_tokens": 381,
+        "completion_tokens": 45,
+        "total_tokens": 426
+      },
+      "answer": "The enclosure should stay between 5 and 35 degrees Celsius [S2].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S2"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "ops-08",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1871.26,
+      "usage": {
+        "prompt_tokens": 253,
+        "completion_tokens": 49,
+        "total_tokens": 302
+      },
+      "answer": "Based on the provided source, inspection results are recorded in the FieldLedger maintenance log [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-01",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2296.2,
+      "usage": {
+        "prompt_tokens": 254,
+        "completion_tokens": 48,
+        "total_tokens": 302
+      },
+      "answer": "Based on the provided source, you must wear eye protection whenever operating the laser cutter [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1687.76,
+      "usage": {
+        "prompt_tokens": 254,
+        "completion_tokens": 44,
+        "total_tokens": 298
+      },
+      "answer": "The laser cutter must be supervised continuously while its beam is enabled [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-03",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1952.3,
+      "usage": {
+        "prompt_tokens": 251,
+        "completion_tokens": 54,
+        "total_tokens": 305
+      },
+      "answer": "Based on the provided source, lithium batteries should be stored in the fire-rated cabinet in room 204 [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-04",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1653.78,
+      "usage": {
+        "prompt_tokens": 252,
+        "completion_tokens": 42,
+        "total_tokens": 294
+      },
+      "answer": "The eyewash station is beside the north entrance [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-05",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1924.86,
+      "usage": {
+        "prompt_tokens": 255,
+        "completion_tokens": 53,
+        "total_tokens": 308
+      },
+      "answer": "Based on the provided source, you should report a chemical spill to the **site safety lead** before cleanup [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-06",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety",
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2173.82,
+      "usage": {
+        "prompt_tokens": 366,
+        "completion_tokens": 41,
+        "total_tokens": 407
+      },
+      "answer": "No, damaged battery packs must not be charged [S1].",
+      "answer_phrase_check": false,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": false,
+      "error": null
+    },
+    {
+      "case_id": "safety-07",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety",
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2335.08,
+      "usage": {
+        "prompt_tokens": 359,
+        "completion_tokens": 44,
+        "total_tokens": 403
+      },
+      "answer": "The first-aid kit is mounted beside the break room door [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "safety-08",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "safety",
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1624.59,
+      "usage": {
+        "prompt_tokens": 358,
+        "completion_tokens": 41,
+        "total_tokens": 399
+      },
+      "answer": "The evacuation assembly point is the east parking sign [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-01",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network",
+        "ops",
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2469.02,
+      "usage": {
+        "prompt_tokens": 465,
+        "completion_tokens": 42,
+        "total_tokens": 507
+      },
+      "answer": "The Cedar Lab gateway uses network segment 42 [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2371.07,
+      "usage": {
+        "prompt_tokens": 243,
+        "completion_tokens": 48,
+        "total_tokens": 291
+      },
+      "answer": "The reserved host name assigned to the gateway is **cedar-gateway.local** [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-03",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1537.39,
+      "usage": {
+        "prompt_tokens": 241,
+        "completion_tokens": 41,
+        "total_tokens": 282
+      },
+      "answer": "The gateway sends telemetry every 15 minutes [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-04",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network",
+        "ops",
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2010.59,
+      "usage": {
+        "prompt_tokens": 481,
+        "completion_tokens": 39,
+        "total_tokens": 520
+      },
+      "answer": "The backup radio uses channel 7 [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-05",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1566.53,
+      "usage": {
+        "prompt_tokens": 241,
+        "completion_tokens": 43,
+        "total_tokens": 284
+      },
+      "answer": "Gateway credentials should be rotated every 180 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-06",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1758.14,
+      "usage": {
+        "prompt_tokens": 242,
+        "completion_tokens": 47,
+        "total_tokens": 289
+      },
+      "answer": "Based on the provided source, a steady amber network light indicates a queued upload [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-07",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1694.22,
+      "usage": {
+        "prompt_tokens": 240,
+        "completion_tokens": 47,
+        "total_tokens": 287
+      },
+      "answer": "Based on the provided source, diagnostic bundles are stored for 14 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "network-08",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "network",
+        "ops"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2135.66,
+      "usage": {
+        "prompt_tokens": 355,
+        "completion_tokens": 40,
+        "total_tokens": 395
+      },
+      "answer": "The Platform Operations team owns the network service [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-01",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2304.05,
+      "usage": {
+        "prompt_tokens": 267,
+        "completion_tokens": 45,
+        "total_tokens": 312
+      },
+      "answer": "The Juniper pressure gauge is calibrated every 180 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality",
+        "network",
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2303.58,
+      "usage": {
+        "prompt_tokens": 476,
+        "completion_tokens": 50,
+        "total_tokens": 526
+      },
+      "answer": "The reference pressure used for the zero-offset check is 100 kilopascals [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-03",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2059.72,
+      "usage": {
+        "prompt_tokens": 264,
+        "completion_tokens": 55,
+        "total_tokens": 319
+      },
+      "answer": "Based on the provided source, the acceptable zero offset is within plus or minus 0.5 kilopascals [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-04",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1864.38,
+      "usage": {
+        "prompt_tokens": 263,
+        "completion_tokens": 46,
+        "total_tokens": 309
+      },
+      "answer": "Based on the provided source, calibration certificates are recorded in the Quality Register [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-05",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1820.8,
+      "usage": {
+        "prompt_tokens": 266,
+        "completion_tokens": 44,
+        "total_tokens": 310
+      },
+      "answer": "After a gauge fails a check, it is quarantined [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-06",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1830.12,
+      "usage": {
+        "prompt_tokens": 264,
+        "completion_tokens": 46,
+        "total_tokens": 310
+      },
+      "answer": "The certified temperature range is 10 to 30 degrees Celsius [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-07",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1804.48,
+      "usage": {
+        "prompt_tokens": 265,
+        "completion_tokens": 42,
+        "total_tokens": 307
+      },
+      "answer": "The calibration bench asset code is CAL-17 [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "quality-08",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1754.62,
+      "usage": {
+        "prompt_tokens": 263,
+        "completion_tokens": 41,
+        "total_tokens": 304
+      },
+      "answer": "The quality review is completed by a second technician [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-01",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2313.41,
+      "usage": {
+        "prompt_tokens": 360,
+        "completion_tokens": 45,
+        "total_tokens": 405
+      },
+      "answer": "The Riverstone recovery kit is stored in cabinet B-12 [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2144.25,
+      "usage": {
+        "prompt_tokens": 349,
+        "completion_tokens": 41,
+        "total_tokens": 390
+      },
+      "answer": "The sensor archive target recovery time is four hours [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-03",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1508.42,
+      "usage": {
+        "prompt_tokens": 359,
+        "completion_tokens": 44,
+        "total_tokens": 403
+      },
+      "answer": "The archive target recovery point is 30 minutes of data [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-04",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2227.25,
+      "usage": {
+        "prompt_tokens": 247,
+        "completion_tokens": 42,
+        "total_tokens": 289
+      },
+      "answer": "The restore procedure is tested every 90 days [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-05",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1548.7,
+      "usage": {
+        "prompt_tokens": 245,
+        "completion_tokens": 40,
+        "total_tokens": 285
+      },
+      "answer": "The on-call coordinator starts the incident bridge [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-06",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1383.67,
+      "usage": {
+        "prompt_tokens": 348,
+        "completion_tokens": 43,
+        "total_tokens": 391
+      },
+      "answer": "The local offline copy is encrypted with the site recovery key [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-07",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1562.03,
+      "usage": {
+        "prompt_tokens": 246,
+        "completion_tokens": 40,
+        "total_tokens": 286
+      },
+      "answer": "The data steward is notified after archive restoration [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "continuity-08",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "quality",
+        "network"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2052.54,
+      "usage": {
+        "prompt_tokens": 474,
+        "completion_tokens": 40,
+        "total_tokens": 514
+      },
+      "answer": "The plan owner reviews the procedure each January [S1].",
+      "answer_phrase_check": true,
+      "abstained": false,
+      "citation_markers": [
+        "S1"
+      ],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": true,
+      "cites_expected_source": true,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-01",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.21,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-02",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "ops",
+        "quality"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 2203.9,
+      "usage": {
+        "prompt_tokens": 387,
+        "completion_tokens": 36,
+        "total_tokens": 423
+      },
+      "answer": "The sources do not contain enough information.",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-03",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.17,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-04",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.02,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-05",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.03,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-06",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.02,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-07",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.02,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-08",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.02,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-09",
+      "status": "completed",
+      "retrieved_source_ids": [
+        "continuity",
+        "safety"
+      ],
+      "finish_reason": "stop",
+      "latency_ms": 1403.17,
+      "usage": {
+        "prompt_tokens": 361,
+        "completion_tokens": 36,
+        "total_tokens": 397
+      },
+      "answer": "The sources do not contain enough information.",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    },
+    {
+      "case_id": "unanswerable-10",
+      "status": "retrieval_no_match",
+      "retrieved_source_ids": [],
+      "finish_reason": "retrieval_no_match",
+      "latency_ms": 0.18,
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null
+      },
+      "answer": "",
+      "answer_phrase_check": null,
+      "abstained": true,
+      "citation_markers": [],
+      "unknown_citation_markers": [],
+      "citation_marker_integrity": null,
+      "cites_expected_source": null,
+      "answer_accepted": true,
+      "error": null
+    }
+  ],
+  "run_context": {
+    "kind": "single_backend_synthetic_development_evaluation",
+    "hardware_and_runtime_commit": "not pinned",
+    "load_conditions": "shared local endpoint; background workloads not controlled",
+    "comparative_claim": false,
+    "notes": "50 pipeline cases;8 no-match cases skipped the model;42 model requests. Not a hardware throughput benchmark."
+  },
+  "manual_review": {
+    "scope": "all50synthetic outputs inspected for disclosure and source support",
+    "automated_rule_mismatch": {
+      "case_id": "safety-06",
+      "finding": "Response says damaged packs must not be charged. Correct paraphrase did not match expected phrase list. Raw automated score retained; rubric was not tuned after this run."
+    },
+    "limitations": "Author review is not independent blinded adjudication. Citation marker validity is distinct from per-claim entailment."
+  }
+}

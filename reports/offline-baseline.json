@@ -1,0 +1,29 @@
+{
+  "title": "Synthetic handbook retrieval evaluation",
+  "mode": "offline_retrieval_only",
+  "dataset": {
+    "cases": 50,
+    "synthetic_sources": 5
+  },
+  "metrics": {
+    "sqlite_fts5": {
+      "answerable_count": 40,
+      "unanswerable_count": 10,
+      "supporting_source_hit_at_3": 1.0,
+      "supporting_source_mrr": 0.9875,
+      "unanswerable_no_match_rate": 0.8,
+      "retrieved_supporting_sources": 40,
+      "retrieval_abstentions": 8
+    },
+    "shared_word_overlap_baseline": {
+      "answerable_count": 40,
+      "unanswerable_count": 10,
+      "supporting_source_hit_at_3": 1.0,
+      "supporting_source_mrr": 0.9875,
+      "unanswerable_no_match_rate": 0.8,
+      "retrieved_supporting_sources": 40,
+      "retrieval_abstentions": 8
+    }
+  },
+  "interpretation": "Supporting-source hit rate and MRR measure retrieval on this authored synthetic set. No model was called, so this report says nothing about generated-answer factuality, citation faithfulness, latency, or cost. Cases cover straightforward lexical questions; they do not evaluate conflicting sources, malicious source instructions, or prompt-injection resistance."
+}

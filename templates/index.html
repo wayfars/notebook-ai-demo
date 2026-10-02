@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notebook — grounded chat demo</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">DOCUMENT-GROUNDED AI</p>
+      <h1>Notebook</h1>
+      <p>Ask a question about the fictional field operations handbook. Answers are grounded in retrieved excerpts and cite their sources.</p>
+    </header>
+    <section class="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Sample sources</h2>
+      <ul id="source-list"><li>Loading sources…</li></ul>
+    </section>
+    <section class="chat" aria-labelledby="chat-title">
+      <h2 id="chat-title">Ask the handbook</h2>
+      <form id="ask-form">
+        <label for="question">Question</label>
+        <textarea id="question" name="question" rows="3" maxlength="2000" required placeholder="What is the inspection interval for a HelioDock battery?"></textarea>
+        <button type="submit">Ask</button>
+      </form>
+      <div id="answer" aria-live="polite"></div>
+    </section>
+    <footer>Demo content is synthetic. Configure any OpenAI-compatible chat completions endpoint with environment variables.</footer>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
