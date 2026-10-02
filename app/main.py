@@ -14,6 +14,10 @@ from .settings import Settings
 from .store import citations_for, connect, load_documents, retrieve_fts, seed_documents
 from .generation import request_answer, validate_answer
 from .prompts import SYSTEM_PROMPT
+from . import db as learning_db
+from .learning.api import router as learning_api
+from .learning.limits import LearningBodyLimit
+from .learning.web import router as learning_pages
 
 ROOT = Path(__file__).resolve().parent.parent
 SAMPLE_PATH = ROOT / "data" / "sample_sources.json"
@@ -23,6 +27,8 @@ class AskRequest(BaseModel):
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     cfg = settings or Settings.from_env()
+    if cfg.database_path.expanduser().resolve() == learning_db.DB_PATH.expanduser().resolve():
+        raise ValueError("grounded-chat and learning databases must use separate paths")
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -32,6 +38,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         yield
 
     app = FastAPI(title="Notebook Grounded Chat", lifespan=lifespan)
+    app.add_middleware(LearningBodyLimit)
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
     @app.get("/", response_class=HTMLResponse)
@@ -80,6 +87,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "retrieval": "matched_sources",
             "citation_validation": citation_validation,
         }
+
+    app.include_router(learning_api)
+    app.include_router(learning_pages)
 
     return app
 

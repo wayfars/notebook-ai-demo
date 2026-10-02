@@ -12,6 +12,7 @@ dependencies = [
   "uvicorn[standard]>=0.30,<1",
   "openai>=1.40,<3",
   "pydantic>=2.8,<3",
+  "jinja2>=3.1,<4",
 ]
 
 [project.optional-dependencies]
@@ -19,15 +20,15 @@ dev = ["pytest>=8,<9", "httpx>=0.27,<1"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["app", "data", "evaluation", "reports", "static", "templates"]
+include = ["app", "app.learning*", "data", "evaluation", "reports", "static", "templates"]
 exclude = ["tests", "tests.*"]
 
 [tool.setuptools.package-data]
 data = ["sample_sources.json"]
 evaluation = ["cases.json"]
 reports = ["offline-baseline.json"]
-static = ["app.js", "style.css"]
-templates = ["index.html"]
+static = ["app.js", "style.css", "features/learning.css", "features/learning.js"]
+templates = ["index.html", "learning/index.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

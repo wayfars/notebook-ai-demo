@@ -2,7 +2,9 @@
 
 A compact portfolio demo of document-grounded AI: retrieve source excerpts with SQLite FTS5, send them to an OpenAI-compatible chat-completions endpoint, and show source citations with an explicit abstention instruction.
 
-This is a focused standalone release distilled from a broader private Notebook application. It is an original, small reimplementation of the selected grounded-chat workflow. It does not contain source files, data, logs, infrastructure configuration, or Git history from that application. All included handbook material and evaluation questions are synthetic. The files included in this release and the source-selection rationale are recorded in [RELEASE_INVENTORY.md](RELEASE_INVENTORY.md).
+This is a focused standalone release derived from a broader Notebook application. The grounded-chat portion is a small reimplementation; the learning workspace is an adapted feature port with a separate public database and settings boundary. No personal databases, account records, real provider configuration, logs, infrastructure files, or private Git history are included. All handbook material, learning demo records, and evaluation questions are fictional or synthetic. The files included in this release and their provenance are recorded in [RELEASE_INVENTORY.md](RELEASE_INVENTORY.md).
+
+The home page also links to a separate, role-scoped **learning workspace** at `/learn/`. It demonstrates course workflows for teachers, students, parents, and tutors using a dedicated learning database. See [Learning workspace setup and limits](docs/LEARNING.md) for the fictional preview, database isolation, administrator bootstrap, model configuration, and scope limits.
 
 See the [browser walkthrough and recorded development evaluation](docs/DEMO.md) for a working demonstration, screenshots, measured synthetic outcomes, and a documented grading false negative.
 
@@ -21,9 +23,11 @@ export OPENAI_MAX_TOKENS=512
 uvicorn app.main:app --reload --port 5100
 ```
 
-Open <http://127.0.0.1:5100>. The app initializes a local SQLite database from `data/sample_sources.json` on startup. `OPENAI_BASE_URL`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_TIMEOUT_SECONDS`, `OPENAI_MAX_TOKENS`, and `NOTEBOOK_DB_PATH` configure the application. Timeout must be finite and positive; the token limit must be between 1 and 4096. `.env.example` lists these variables for reference; the app does not load `.env` files itself. Any compatible endpoint that implements OpenAI chat completions can be used. The example keeps the app on port 5100 and the model endpoint on port 8000 to avoid a port conflict.
+Open <http://127.0.0.1:5100>. The app initializes a local SQLite database from `data/sample_sources.json` on startup. `OPENAI_BASE_URL`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_TIMEOUT_SECONDS`, `OPENAI_MAX_TOKENS`, and `NOTEBOOK_DB_PATH` configure grounded chat. Timeout must be finite and positive; the token limit must be between 1 and 4096. `.env.example` lists these variables for reference; the app does not load `.env` files itself. Any compatible endpoint that implements OpenAI chat completions can be used. The example keeps the app on port 5100 and the model endpoint on port 8000 to avoid a port conflict.
 
-The server binds to Uvicorn's default loopback address unless you set it explicitly. This demo has no user authentication, multi-user isolation, document upload, URL fetching, or production hardening. Keep it on a trusted local network. The demo sends the retrieved excerpts and question to the configured model endpoint.
+Learning data uses a separate `NOTEBOOK_LEARNING_DB_PATH` SQLite file, defaulting under the user's XDG data directory. It never uses `NOTEBOOK_DB_PATH`; pointing both variables at the same path is rejected. Seed only invented records with the explicit demo command in [the learning guide](docs/LEARNING.md). Learning endpoints use public `OPENAI_*` settings by default, with optional `NOTEBOOK_LEARNING_*` endpoint overrides.
+
+The server binds to Uvicorn's default loopback address unless you set it explicitly. The grounded-chat route has no user authentication or multi-user isolation; learning uses a separate login and database but does not protect grounded-chat routes. This demo has no document upload, URL fetching, or production hardening. Keep it on a trusted local network. Grounded chat sends retrieved excerpts and the question to the configured model endpoint.
 
 ## What the demo does
 
@@ -61,10 +65,11 @@ Browser → FastAPI `/api/ask` → SQLite FTS5 (top three sources)
 - `app/store.py` owns the SQLite schema, sample indexing, FTS5 retrieval, and simple baseline.
 - `app/main.py` serves a minimal web interface and grounded question endpoint; `app/generation.py` shares generation and citation validation with the live evaluator.
 - `app/settings.py` reads backend and database settings from environment variables.
+- `app/learning/` contains the isolated role-scoped course workspace, with its own database adapter, bounded AI helpers, and explicit fictional seed command.
 - `evaluation/` contains the labeled question set, deterministic comparison runner, and opt-in live model runner.
 - `tests/` verifies indexing, retrieval, evaluation behavior, request wiring, and no-match abstention.
 
-The wheel explicitly includes only the application packages and the listed synthetic JSON, HTML, CSS, and JavaScript assets. It excludes the test suite, local SQLite databases, uploads, and logs.
+The wheel explicitly includes only the application packages and the listed synthetic JSON, HTML, CSS, and JavaScript assets, including the learning workspace UI. It excludes the test suite, local SQLite databases, uploads, and logs.
 
 ## License and attribution
 

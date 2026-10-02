@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Learning workspace · Notebook</title>
+  <link rel="stylesheet" href="{{ static_url('features/learning.css') }}">
+  <script defer src="{{ static_url('features/learning.js') }}"></script>
+</head>
+<body data-focus-login="{{ 'true' if focus_login else 'false' }}">
+  <a class="skip-link" href="#main">Skip to learning workspace</a>
+  <div class="learn-app" id="app">
+    <header class="topbar">
+      <a class="brand" href="/learn/" aria-label="Notebook learning home">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        <span>Notebook <span class="brand-subtitle">Learning</span></span>
+      </a>
+      <div class="account-area" id="account-area" hidden>
+        <span class="account-name" id="account-name"></span>
+        <span class="role-pill" id="account-role"></span>
+        <button class="button button-quiet button-small" id="logout-button" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="login-wrap" id="login-view" aria-labelledby="login-title" hidden>
+        <div class="login-card">
+          <p class="eyebrow">A focused space to learn</p>
+          <h1 id="login-title">Sign in to learning</h1>
+          <p class="muted">Use the account your teacher or school administrator created for you.</p>
+          <form id="login-form" class="stack-form" novalidate>
+            <label for="login-username">Username</label>
+            <input id="login-username" name="username" autocomplete="username" required maxlength="80">
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required maxlength="256">
+            <button class="button button-primary" type="submit">Sign in</button>
+          </form>
+          <p class="form-message" id="login-message" role="alert" aria-live="polite"></p>
+          <p class="fine-print">Accounts are provided by your school. There is no public signup or role picker.</p>
+        </div>
+      </section>
+
+      <section id="workspace-view" hidden>
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow" id="welcome-eyebrow">Learning workspace</p>
+            <h1 id="welcome-title">Welcome</h1>
+            <p class="muted" id="welcome-copy"></p>
+          </div>
+          <div class="workspace-status" id="workspace-status" aria-live="polite"></div>
+        </div>
+        <nav class="section-nav" id="section-nav" aria-label="Learning workspace sections"></nav>
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div id="section-content" class="section-content"></div>
+      </section>
+    </main>
+    <footer class="page-footer"><span>Notebook Learning</span><span>Learning records are shared only with authorized members of your school.</span></footer>
+  </div>
+</body>
+</html>

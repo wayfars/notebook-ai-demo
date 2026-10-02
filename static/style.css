@@ -5,6 +5,7 @@ main { width: min(760px, calc(100% - 2rem)); margin: 5vh auto; }
 header, section { background: #192235; border: 1px solid #2b3850; border-radius: 14px; padding: 1.4rem; margin-bottom: 1rem; }
 h1 { font-size: clamp(2rem, 8vw, 3.4rem); line-height: 1.05; margin: .2rem 0 .6rem; }
 h2 { font-size: 1.1rem; margin: 0 0 1rem; }
+.feature-link { display: inline-block; color: #85d6c1; font-weight: 700; margin-top: .4rem; }
 .eyebrow { color: #85d6c1; letter-spacing: .14em; font-size: .75rem; font-weight: 700; }
 label { display: block; margin-bottom: .35rem; }
 textarea { width: 100%; resize: vertical; border-radius: 8px; border: 1px solid #51617e; background: #111a2a; color: inherit; padding: .8rem; font: inherit; }

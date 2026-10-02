@@ -4,7 +4,7 @@ These projects connect application behavior to model evaluation, serving measure
 
 | Project | Engineering evidence |
 | --- | --- |
-| [Notebook](https://github.com/wayfars/notebook-ai-demo) | Source-grounded chat, inspectable excerpts, retrieval baselines, and separate live-answer checks |
+| [Notebook](https://github.com/wayfars/notebook-ai-demo) | Source-grounded chat, inspectable excerpts, retrieval baselines, a separately stored role-scoped learning-workspace demo, and synthetic answer checks |
 | [AI Task Evaluations](https://github.com/wayfars/ai-task-evals) | Explicit task contracts, strict structured grading, failure accounting, and evaluation methodology |
 | [Local Inference Bench](https://github.com/wayfars/local-inference-bench) | Streaming latency, concurrent request outcomes, accepted work, and safe reproducibility manifests |
 | [Perpetua](https://github.com/wayfars/perpetua-agent-supervisor) | Durable agent handoffs, interrupted-process reconciliation, bounded recovery, and human escalation |

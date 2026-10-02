@@ -7,6 +7,11 @@ __pycache__/
 .pytest_cache/
 .env
 data/*.sqlite3
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*-wal
+**/*-shm
 reports/*
 !reports/.gitkeep
 !reports/offline-baseline.json
